@@ -36,7 +36,7 @@ const Header = () => {
             <li><a href="#contact" onClick={handleLinkClick}>تماس با ما</a></li>
           </ul>
           <ul className="nav-right">
-            <li><a href="#login" className="btn-ghost" onClick={handleLinkClick}>ورود</a></li>
+            <li><a href="/login" className="btn-ghost" onClick={handleLinkClick}>ورود</a></li>
             <li><a href="/Signup" className="btn-primary" onClick={handleLinkClick}>ثبت نام</a></li>
           </ul>
         </nav>

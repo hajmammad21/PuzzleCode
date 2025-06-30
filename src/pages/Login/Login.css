@@ -1,4 +1,4 @@
-.signup-container {
+.login-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
   display: flex;
@@ -12,7 +12,7 @@
   overflow-y: auto;
 }
 
-.signup-container::before {
+.login-container::before {
   content: '';
   position: absolute;
   top: 0;
@@ -26,7 +26,7 @@
   pointer-events: none;
 }
 
-.signup-background {
+.login-background {
   position: relative;
   z-index: 1;
   width: 100%;
@@ -34,7 +34,7 @@
   margin: 1rem auto;
 }
 
-.signup-card {
+.login-card {
   background: rgba(16, 16, 30, 0.9);
   border: 1px solid rgba(100, 255, 218, 0.1);
   border-radius: 20px;
@@ -49,10 +49,9 @@
   overflow: hidden;
   width: 100%;
   min-height: auto;
-  margin-top: 70px;
 }
 
-.signup-card::before {
+.login-card::before {
   content: '';
   position: absolute;
   top: 0;
@@ -67,7 +66,7 @@
   );
 }
 
-.signup-card:hover {
+.login-card:hover {
   transform: translateY(-2px);
   box-shadow: 
     0 25px 50px rgba(0, 0, 0, 0.5),
@@ -77,12 +76,12 @@
 }
 
 /* Header Section */
-.signup-header {
+.login-header {
   text-align: center;
   margin-bottom: 1.5rem;
 }
 
-.signup-logo {
+.login-logo {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,7 +91,7 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.signup-logo .logo-text {
+.login-logo .logo-text {
   background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -100,7 +99,7 @@
   letter-spacing: -0.5px;
 }
 
-.signup-logo .logo-accent {
+.login-logo .logo-accent {
   background: linear-gradient(135deg, #64ffda 0%, #4fc3f7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -109,7 +108,7 @@
   font-weight: 800;
 }
 
-.signup-logo .logo-dot {
+.login-logo .logo-dot {
   width: 10px;
   height: 10px;
   background: linear-gradient(135deg, #64ffda 0%, #4fc3f7 100%);
@@ -132,7 +131,7 @@
   }
 }
 
-.signup-title {
+.login-title {
   font-size: 2rem;
   font-weight: 800;
   background: linear-gradient(135deg, #ffffff 0%, #b0b0b0 100%);
@@ -143,15 +142,15 @@
   letter-spacing: -1px;
 }
 
-.signup-subtitle {
+.login-subtitle {
   color: #a0a0a0;
   font-size: 1.1rem;
   margin: 0;
   font-weight: 400;
 }
 
-/* Form Styles - Fixed Height Issue */
-.signup-form {
+/* Form Styles */
+.login-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -169,12 +168,6 @@
   font-weight: 500;
   font-size: 0.95rem;
   margin-bottom: 0.25rem;
-}
-
-.input-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 70px;
 }
 
 .form-input {
@@ -223,11 +216,127 @@
     0 4px 20px rgba(255, 107, 107, 0.05);
 }
 
-.error-container {
-  height: 20px;
+/* Password Input with Toggle */
+.password-input-wrapper {
+  position: relative;
   display: flex;
-  align-items: flex-start;
-  padding-top: 0.25rem;
+  align-items: center;
+}
+
+.password-input {
+  padding-left: 3rem !important;
+  width: 100%;
+}
+
+.password-toggle {
+  position: absolute;
+  left: 0.875rem;
+  background: none;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.password-toggle:hover:not(:disabled) {
+  color: #64ffda;
+  background: rgba(100, 255, 218, 0.1);
+}
+
+.password-toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Form Options */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5rem 0;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkbox-input {
+  width: 18px;
+  height: 18px;
+  background: rgba(20, 20, 35, 0.8);
+  border: 2px solid rgba(100, 255, 218, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  appearance: none;
+  transition: all 0.3s ease;
+}
+
+.checkbox-input:checked {
+  background: linear-gradient(135deg, #64ffda 0%, #4fc3f7 100%);
+  border-color: #64ffda;
+}
+
+.checkbox-input:checked::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 5px;
+  width: 6px;
+  height: 10px;
+  border: solid #000;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-input:focus {
+  outline: 2px solid #64ffda;
+  outline-offset: 2px;
+}
+
+.checkbox-label {
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.forgot-password-link {
+  color: #64ffda;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.forgot-password-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background: linear-gradient(135deg, #64ffda 0%, #4fc3f7 100%);
+  transition: width 0.3s ease;
+}
+
+.forgot-password-link:hover {
+  color: #4fc3f7;
+}
+
+.forgot-password-link:hover::after {
+  width: 100%;
 }
 
 .error-message {
@@ -242,7 +351,7 @@
 }
 
 /* Button Styles */
-.signup-button {
+.login-button {
   background: linear-gradient(135deg, #64ffda 0%, #4fc3f7 100%);
   color: #000;
   border: none;
@@ -260,7 +369,7 @@
   height: 52px;
 }
 
-.signup-button::before {
+.login-button::before {
   content: '';
   position: absolute;
   top: 0;
@@ -272,36 +381,36 @@
   transition: opacity 0.3s ease;
 }
 
-.signup-button:hover:not(:disabled) {
+.login-button:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(100, 255, 218, 0.4);
 }
 
-.signup-button:hover:not(:disabled)::before {
+.login-button:hover:not(:disabled)::before {
   opacity: 1;
 }
 
-.signup-button:active:not(:disabled) {
+.login-button:active:not(:disabled) {
   transform: translateY(0);
 }
 
-.signup-button:disabled {
+.login-button:disabled {
   opacity: 0.7;
   cursor: not-allowed;
   transform: none;
 }
 
-.signup-button.loading {
+.login-button.loading {
   color: transparent;
 }
 
-.signup-button-text {
+.login-button-text {
   position: relative;
   z-index: 2;
   color: #000;
 }
 
-.signup-button::before {
+.login-button::before {
   z-index: 1;
 }
 
@@ -324,20 +433,20 @@
 }
 
 /* Footer */
-.signup-footer {
+.login-footer {
   text-align: center;
   margin-top: 1.5rem;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(100, 255, 218, 0.1);
 }
 
-.signup-footer p {
+.login-footer p {
   color: #a0a0a0;
   margin: 0;
   font-size: 0.95rem;
 }
 
-.login-link {
+.signup-link {
   color: #64ffda;
   text-decoration: none;
   font-weight: 600;
@@ -345,7 +454,7 @@
   position: relative;
 }
 
-.login-link::after {
+.signup-link::after {
   content: '';
   position: absolute;
   width: 0;
@@ -356,11 +465,11 @@
   transition: width 0.3s ease;
 }
 
-.login-link:hover {
+.signup-link:hover {
   color: #4fc3f7;
 }
 
-.login-link:hover::after {
+.signup-link:hover::after {
   width: 100%;
 }
 
@@ -460,28 +569,28 @@
   }
 }
 
-/* Mobile Responsive - Updated */
+/* Mobile Responsive */
 @media (max-width: 768px) {
-  .signup-container {
+  .login-container {
     padding: 0.5rem;
     align-items: flex-start;
     padding-top: 1rem;
   }
 
-  .signup-background {
+  .login-background {
     margin: 0.5rem auto;
   }
 
-  .signup-card {
+  .login-card {
     padding: 1.5rem;
     border-radius: 16px;
   }
 
-  .signup-title {
+  .login-title {
     font-size: 1.75rem;
   }
 
-  .signup-subtitle {
+  .login-subtitle {
     font-size: 1rem;
   }
 
@@ -491,14 +600,20 @@
     height: 48px;
   }
 
-  .input-wrapper {
-    min-height: 68px;
+  .password-input {
+    padding-left: 3rem !important;
   }
 
-  .signup-button {
+  .login-button {
     padding: 1rem 1.5rem;
     font-size: 1rem;
     height: 50px;
+  }
+
+  .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
   }
 
   .toast {
@@ -511,39 +626,64 @@
 }
 
 @media (max-width: 480px) {
-  .signup-container {
+  .login-container {
     padding: 0.25rem;
   }
 
-  .signup-card {
+  .login-card {
     padding: 1.25rem;
     margin: 0.25rem;
   }
 
-  .signup-header {
+  .login-header {
     margin-bottom: 1.25rem;
   }
 
-  .signup-title {
+  .login-title {
     font-size: 1.5rem;
   }
 
-  .signup-logo {
+  .login-logo {
     font-size: 1.4rem;
   }
 
   .form-input {
     height: 46px;
     padding: 0.75rem 0.875rem;
+    font-size: 16px;
   }
 
-  .input-wrapper {
-    min-height: 66px;
+  .password-input {
+    padding-left: 2.75rem !important;
   }
 
-  .signup-button {
+  .password-toggle {
+    left: 0.75rem;
+    padding: 0.375rem;
+  }
+
+  .login-button {
     height: 48px;
+    padding: 0.875rem 1.25rem;
     font-size: 0.95rem;
+  }
+
+  .form-options {
+    gap: 1rem;
+  }
+
+  .form-label {
+    font-size: 0.9rem;
+  }
+
+  .error-message {
+    font-size: 0.8rem;
+  }
+
+  .toast {
+    top: 5px;
+    right: 5px;
+    left: 5px;
   }
 
   .toast-content {
@@ -555,94 +695,129 @@
   }
 }
 
-/* Small screens - prevent overflow */
-@media (max-height: 700px) {
-  .signup-container {
-    align-items: flex-start;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+/* Extra small devices (320px and below) */
+@media (max-width: 320px) {
+  .login-card {
+    padding: 1rem;
+    border-radius: 12px;
   }
 
-  .signup-card {
-    margin-top: 0;
+  .login-title {
+    font-size: 1.25rem;
   }
 
-  .signup-header {
+  .login-logo {
+    font-size: 1.2rem;
+  }
+
+  .login-logo .logo-dot {
+    width: 8px;
+    height: 8px;
+    margin-left: 4px;
+  }
+
+  .form-input {
+    height: 44px;
+    padding: 0.625rem 0.75rem;
+  }
+
+  .password-input {
+    padding-left: 2.5rem !important;
+  }
+
+  .password-toggle {
+    left: 0.625rem;
+  }
+
+  .login-button {
+    height: 46px;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .checkbox-input {
+    width: 16px;
+    height: 16px;
+  }
+
+  .checkbox-label,
+  .forgot-password-link {
+    font-size: 0.85rem;
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .login-card {
+    backdrop-filter: blur(25px);
+  }
+  
+  .toast {
+    backdrop-filter: blur(25px);
+  }
+}
+
+/* Landscape orientation on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .login-container {
+    padding: 0.5rem;
+    align-items: center;
+  }
+
+  .login-card {
+    padding: 1.25rem;
+    margin: 0.5rem auto;
+  }
+
+  .login-header {
     margin-bottom: 1rem;
   }
 
-  .signup-title {
-    font-size: 1.5rem;
-  }
-
-  .form-group {
-    gap: 0.25rem;
-  }
-
-  .input-wrapper {
-    min-height: 65px;
+  .login-form {
+    gap: 0.875rem;
   }
 }
 
-/* Very small screens */
-@media (max-height: 600px) {
-  .signup-container {
-    min-height: auto;
-    height: auto;
-  }
-
-  .signup-card {
-    padding: 1rem;
-  }
-
-  .signup-header {
-    margin-bottom: 0.75rem;
-  }
-
-  .signup-footer {
-    margin-top: 1rem;
-    padding-top: 1rem;
-  }
-}
-
-/* Accessibility */
+/* Accessibility improvements */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+
+  .login-logo .logo-dot {
+    animation: none;
+  }
+
+  .loading-spinner {
+    animation: none;
+  }
 }
 
-/* Focus states for accessibility */
-.form-input:focus,
-.signup-button:focus,
-.login-link:focus,
-.toast-close:focus {
+/* Focus visible for better keyboard navigation */
+.form-input:focus-visible,
+.login-button:focus-visible,
+.checkbox-input:focus-visible,
+.password-toggle:focus-visible {
   outline: 2px solid #64ffda;
   outline-offset: 2px;
 }
 
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  .signup-card {
-    background: #000000;
-    border: 2px solid #64ffda;
+/* Print styles */
+@media print {
+  .login-container {
+    background: white;
+    color: black;
   }
-  
-  .form-input {
-    background: #000000;
-    border: 2px solid #64ffda;
-    color: #ffffff;
-  }
-  
-  .signup-title,
-  .form-label {
-    color: #ffffff;
+
+  .login-card {
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: none;
   }
 
   .toast {
-    background: #000000;
-    border: 2px solid #64ffda;
+    display: none;
   }
 }
