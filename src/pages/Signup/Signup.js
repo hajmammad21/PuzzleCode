@@ -180,7 +180,7 @@ const Signup = () => {
 
             <form className="signup-form" onSubmit={handleSubmit}>
               <div className="form-group">
-                <label htmlFor="name" className="form-label">نام کامل</label>
+                <label htmlFor="name" className="form-label">نام کاربری</label>
                 <input
                   type="text"
                   id="name"
@@ -188,7 +188,7 @@ const Signup = () => {
                   value={formData.name}
                   onChange={handleChange}
                   className={`form-input ${errors.name ? 'error' : ''}`}
-                  placeholder="نام خود را وارد کنید"
+                  placeholder="نام کاربری خود را وارد کنید"
                   disabled={isLoading}
                 />
                 {errors.name && <span className="error-message">{errors.name}</span>}
