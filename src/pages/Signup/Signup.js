@@ -134,34 +134,39 @@ const Signup = () => {
 
     setIsLoading(true);
     
-    // Simulate API call
-    try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Here you would normally make the API call
-      console.log('Signup data:', {
-        name: formData.name,
+  try {
+    // API CALL HERE:
+    const response = await fetch('http://localhost:5000/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: formData.name,
         email: formData.email,
         password: formData.password
-      });
-      
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
       showToast('حساب کاربری با موفقیت ایجاد شد!', 'success');
-      
-      // Reset form
       setFormData({
         name: '',
         email: '',
         password: '',
         confirmPassword: ''
       });
-      
-    } catch (error) {
-      console.error('Signup error:', error);
-      showToast('خطا در ایجاد حساب کاربری', 'error');
-    } finally {
-      setIsLoading(false);
+    } else {
+      // Backend error (like duplicate email/username)
+      showToast(data.message || 'خطا در ایجاد حساب کاربری', 'error');
     }
-  };
+  } catch (error) {
+    console.error('Signup error:', error);
+    showToast('خطای شبکه یا سرور', 'error');
+  } finally {
+    setIsLoading(false);
+  }
+};
 
   return (
     <>

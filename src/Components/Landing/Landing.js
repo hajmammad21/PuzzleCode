@@ -44,7 +44,7 @@ const Landing = () => {
       {/* بخش یادگیری عملی */}
       <section className="learn-section" id="learn">
         <div className="container">
-          <h2 className="section-title">یادگیری با <span className="highlight">انجام دادن</span></h2>
+          <h2 className="section-title">یادگیری با <span className="highlight">بازی کردن</span></h2>
           <p className="section-subtitle">
             مسیرت را انتخاب کن و با پروژه‌های عملی و آموزش‌های تعاملی کدنویسی را شروع کن
           </p>
