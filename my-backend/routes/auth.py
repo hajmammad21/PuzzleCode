@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from models import db, User
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import JWTManager, create_access_token
+from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required, get_jwt_identity
 
 
 auth_bp = Blueprint('auth', __name__)
@@ -42,12 +42,24 @@ def login():
 
     # Create JWT access token
     access_token = create_access_token(identity=str(user.id))
+    refresh_token = create_refresh_token(identity=str(user.id))
+
     return jsonify({
         "message": "Login successful",
         "token": access_token,
+        "refresh_token": refresh_token,
         "user": {
             "id": user.id,
             "username": user.username,
             "email": user.email
         }
+    }), 200
+
+@auth_bp.route('/refresh', methods=['POST'])
+@jwt_required(refresh=True)
+def refresh():
+    current_user = get_jwt_identity()
+    new_access_token = create_access_token(identity=current_user)
+    return jsonify({
+        'access_token': new_access_token
     }), 200

@@ -30,7 +30,6 @@ const Dashboard = () => {
   if (loading) return <div>در حال بارگذاری...</div>;
   if (!user) return <div>خطا در دریافت اطلاعات کاربر</div>;
 
-  // Here, we assume 'role' is part of the user info.
   return (
     <>
       {user.role === 'admin'
