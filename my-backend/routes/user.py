@@ -87,3 +87,14 @@ def create_notification():
     db.session.add(notif)
     db.session.commit()
     return jsonify({"message": "Notification created"})
+
+@user_bp.route('/notifications/<int:notif_id>', methods=['DELETE'])
+@jwt_required()
+def delete_notification(notif_id):
+    user_id = get_jwt_identity()
+    notif = Notification.query.filter_by(id=notif_id, user_id=user_id).first()
+    if not notif:
+        return jsonify({"message": "Notification not found"}), 404
+    db.session.delete(notif)
+    db.session.commit()
+    return jsonify({"message": "Notification deleted"})

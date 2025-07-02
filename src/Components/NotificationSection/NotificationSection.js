@@ -16,14 +16,14 @@ const NotificationSection = () => {
       });
   }, []);
 
-  const markAsRead = async (id) => {
-    const token = localStorage.getItem('token');
-    await fetch(`http://localhost:5000/api/user/notifications/${id}/read`, {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
-    setNotifications(prev => prev.map(n => n.id === id ? { ...n, is_read: true } : n));
-  };
+  const deleteNotification = async (id) => {
+  const token = localStorage.getItem('token');
+  await fetch(`http://localhost:5000/api/user/notifications/${id}`, {
+    method: 'DELETE',
+    headers: { 'Authorization': `Bearer ${token}` }
+  });
+  setNotifications(prev => prev.filter(n => n.id !== id));
+};
 
   if (loading) return <div>در حال بارگذاری اعلان‌ها...</div>;
 
@@ -39,10 +39,10 @@ const NotificationSection = () => {
               {new Date(n.created_at).toLocaleString()}
             </span>
             {!n.is_read && (
-              <button style={{ marginLeft: 15 }} onClick={() => markAsRead(n.id)}>
-                خواندم
-              </button>
-            )}
+  <button style={{ marginLeft: 15 }} onClick={() => deleteNotification(n.id)}>
+    خواندم و حذف کن
+  </button>
+)}
           </li>
         ))}
       </ul>
