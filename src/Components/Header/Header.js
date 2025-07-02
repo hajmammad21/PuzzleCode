@@ -75,9 +75,9 @@ const Header = () => {
         <nav className={`nav ${menuOpen ? 'open' : ''}`}>
           <ul className="nav-center">
             <li><a href="/" onClick={handleLinkClick}>خانه</a></li>
-            <li><a href="#python" onClick={handleLinkClick}>پایتون</a></li>
-            <li><a href="#tutorials" onClick={handleLinkClick}>آموزش</a></li>
-            <li><a href="#contact" onClick={handleLinkClick}>تماس با ما</a></li>
+            <li><a href="/python" onClick={handleLinkClick}>پایتون</a></li>
+            <li><a href="/tutorials" onClick={handleLinkClick}>آموزش</a></li>
+            <li><a href="/contact" onClick={handleLinkClick}>تماس با ما</a></li>
           </ul>
           <ul className="nav-right">
   {isLoggedIn ? (
@@ -98,11 +98,6 @@ const Header = () => {
         <a href="/dashboard" className="dropdown-item" onClick={handleLinkClick}>
           <span className="dropdown-icon">📊</span>
           داشبورد
-        </a>
-        
-        <a href="/profile" className="dropdown-item" onClick={handleLinkClick}>
-          <span className="dropdown-icon">👤</span>
-          پروفایل
         </a>
         
         <div className="dropdown-divider"></div>
