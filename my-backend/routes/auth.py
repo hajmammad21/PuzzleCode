@@ -32,6 +32,7 @@ def signup():
 @auth_bp.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
+    print('LOGIN ATTEMPT:', data)
     username = data.get('username')
     password = data.get('password')
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Login.css';
 
-// Toast Component
+// Toast Component (unchanged)
 const Toast = ({ message, type, isVisible, onClose }) => {
   useEffect(() => {
     if (isVisible) {
@@ -43,8 +43,9 @@ const Toast = ({ message, type, isVisible, onClose }) => {
 };
 
 const Login = () => {
+  // Use 'name' for username
   const [formData, setFormData] = useState({
-    email: '',
+    name: '',
     password: ''
   });
   const [errors, setErrors] = useState({});
@@ -78,8 +79,7 @@ const Login = () => {
       ...prev,
       [name]: value
     }));
-    
-    // Clear error when user starts typing
+
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -91,11 +91,9 @@ const Login = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    // Email validation
-    if (!formData.email.trim()) {
-      newErrors.email = 'ایمیل الزامی است';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'فرمت ایمیل صحیح نیست';
+    // Username validation
+    if (!formData.name.trim()) {
+      newErrors.name = 'نام کاربری الزامی است';
     }
 
     // Password validation
@@ -114,7 +112,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -123,30 +121,49 @@ const Login = () => {
     }
 
     setIsLoading(true);
-    
-    // Simulate API call
+
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Here you would normally make the API call
-      console.log('Login data:', {
-        email: formData.email,
-        password: formData.password,
-        rememberMe: rememberMe
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: formData.name, // send as username!
+          password: formData.password
+        }),
       });
-      
-      showToast('با موفقیت وارد شدید!', 'success');
-      
-      // Reset form
-      setFormData({
-        email: '',
-        password: ''
-      });
-      setRememberMe(false);
-      
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Save JWT token to localStorage
+        localStorage.setItem('token', data.token);
+        
+        // Store user info if provided by backend
+        if (data.user) {
+          localStorage.setItem('user', JSON.stringify(data.user));
+        }
+
+        showToast('با موفقیت وارد شدید!', 'success');
+
+        // Reset form
+        setFormData({
+          name: '',
+          password: ''
+        });
+        setRememberMe(false);
+
+        // Redirect to home page after a short delay
+        setTimeout(() => {
+          window.location.href = '/';
+          // Or if using React Router: navigate('/');
+        }, 1000);
+
+      } else {
+        showToast(data.message || 'خطا در ورود', 'error');
+      }
     } catch (error) {
       console.error('Login error:', error);
-      showToast('خطا در ورود به حساب کاربری', 'error');
+      showToast('خطای شبکه یا سرور', 'error');
     } finally {
       setIsLoading(false);
     }
@@ -169,18 +186,18 @@ const Login = () => {
 
             <form className="login-form" onSubmit={handleSubmit}>
               <div className="form-group">
-                <label htmlFor="email" className="form-label">ایمیل</label>
+                <label htmlFor="name" className="form-label">نام کاربری</label>
                 <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
-                  className={`form-input ${errors.email ? 'error' : ''}`}
-                  placeholder="example@email.com"
+                  className={`form-input ${errors.name ? 'error' : ''}`}
+                  placeholder="نام کاربری خود را وارد کنید"
                   disabled={isLoading}
                 />
-                {errors.email && <span className="error-message">{errors.email}</span>}
+                {errors.name && <span className="error-message">{errors.name}</span>}
               </div>
 
               <div className="form-group">
