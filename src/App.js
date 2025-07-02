@@ -5,6 +5,7 @@ import Landing from './Components/Landing/Landing';
 import Signup from './pages/Signup/Signup';
 import Login from './pages/Login/Login';
 import Contact from './pages/Contact/Contact';
+import Dashboard from './Components/Dashboard/Dashboard';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
   );
