@@ -1,317 +1,355 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Contact.css';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
+  const [form, setForm] = useState({
     name: '',
     email: '',
-    subject: '',
     message: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [fieldStates, setFieldStates] = useState({
+    name: { focused: false, filled: false },
+    email: { focused: false, filled: false },
+    message: { focused: false, filled: false }
+  });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+  // Toast state
+  const [toast, setToast] = useState({ show: false, message: '', type: '' });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
+  // Math captcha states
+  const [num1] = useState(() => Math.floor(Math.random() * 10 + 1));
+  const [num2] = useState(() => Math.floor(Math.random() * 10 + 1));
+  const [captcha, setCaptcha] = useState('');
+  const [captchaError, setCaptchaError] = useState('');
+  const [captchaFocused, setCaptchaFocused] = useState(false);
+
+  // Toast functions
+  const showToast = (message, type) => {
+    setToast({ show: true, message, type });
+    // Auto hide after 5 seconds
+    setTimeout(() => {
+      setToast({ show: false, message: '', type: '' });
+    }, 5000);
+  };
+
+  const hideToast = () => {
+    setToast({ show: false, message: '', type: '' });
+  };
+
+  // Update field states when form values change
+  useEffect(() => {
+    setFieldStates({
+      name: { 
+        focused: fieldStates.name.focused, 
+        filled: form.name.trim() !== '' 
+      },
+      email: { 
+        focused: fieldStates.email.focused, 
+        filled: form.email.trim() !== '' 
+      },
+      message: { 
+        focused: fieldStates.message.focused, 
+        filled: form.message.trim() !== '' 
+      }
+    });
+  }, [form.name, form.email, form.message]);
+
+  const handleChange = (e) => {
+    setForm(prev => ({
       ...prev,
-      [name]: value
+      [e.target.name]: e.target.value
     }));
+  };
+
+  const handleFocus = (fieldName) => {
+    setFieldStates(prev => ({
+      ...prev,
+      [fieldName]: { ...prev[fieldName], focused: true }
+    }));
+  };
+
+  const handleBlur = (fieldName) => {
+    setFieldStates(prev => ({
+      ...prev,
+      [fieldName]: { ...prev[fieldName], focused: false }
+    }));
+  };
+
+  const handleCaptchaChange = (e) => {
+    setCaptcha(e.target.value);
+    setCaptchaError('');
+  };
+
+  const handleCaptchaFocus = () => {
+    setCaptchaFocused(true);
+  };
+
+  const handleCaptchaBlur = () => {
+    setCaptchaFocused(false);
+  };
+
+  const validateForm = () => {
+    if (!form.name.trim()) {
+      showToast('لطفاً نام خود را وارد کنید.', 'error');
+      return false;
+    }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(form.email)) {
+      showToast('لطفاً ایمیل معتبر وارد کنید.', 'error');
+      return false;
+    }
+    
+    if (!form.message.trim()) {
+      showToast('لطفاً پیام خود را وارد کنید.', 'error');
+      return false;
+    }
+    
+    if (form.message.trim().length < 10) {
+      showToast('پیام باید حداقل ۱۰ کاراکتر باشد.', 'error');
+      return false;
+    }
+    
+    return true;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus('success');
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
+
+    // Validate form first
+    if (!validateForm()) return;
+
+    // Math captcha validation
+    if (parseInt(captcha, 10) !== num1 + num2) {
+      setCaptchaError('جواب جمع صحیح نیست.');
+      showToast('لطفاً سوال امنیتی را به درستی پاسخ دهید.', 'error');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
       });
       
-      // Clear success message after 5 seconds
-      setTimeout(() => {
-        setSubmitStatus(null);
-      }, 5000);
-    }, 2000);
+      const data = await response.json();
+      
+      if (response.ok) {
+        showToast(
+          data.message || 'پیام شما با موفقیت ارسال شد! به زودی با شما تماس خواهیم گرفت.',
+          'success'
+        );
+        setForm({ name: '', email: '', message: '' });
+        setCaptcha('');
+        setCaptchaError('');
+        setFieldStates({
+          name: { focused: false, filled: false },
+          email: { focused: false, filled: false },
+          message: { focused: false, filled: false }
+        });
+      } else {
+        showToast(
+          data.message || 'متأسفانه ارسال پیام با خطا مواجه شد. لطفاً دوباره تلاش کنید.',
+          'error'
+        );
+      }
+    } catch (err) {
+      showToast(
+        'ارتباط با سرور برقرار نشد. لطفاً اتصال اینترنت خود را بررسی کنید.',
+        'error'
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getInputWrapperClass = (fieldName) => {
+    const state = fieldStates[fieldName];
+    return `input-wrapper ${state.focused ? 'focused' : ''} ${state.filled ? 'filled' : ''}`;
+  };
+
+  const Toast = ({ message, type, show, onClose }) => {
+    if (!show) return null;
+    
+    return (
+      <div className={`toast ${type} ${show ? 'show' : ''}`}>
+        <div className="toast-content">
+          <div className="toast-icon">
+            {type === 'success' ? '✅' : '❌'}
+          </div>
+          <div className="toast-message">{message}</div>
+          <button className="toast-close" onClick={onClose}>×</button>
+        </div>
+      </div>
+    );
   };
 
   return (
-    <div className="contact-container">
-      {/* Hero Section */}
-      <section className="contact-hero">
-        <div className="hero-background">
-          <div className="hero-overlay"></div>
-        </div>
-        <div className="container">
-          <div className="hero-content">
-            <h1 className="hero-title">
-              تماس با <span className="hero-accent">پازل‌کد</span>
-            </h1>
-            <p className="hero-subtitle">
-              ما اینجا هستیم تا به شما کمک کنیم. سوالاتتان را بپرسید و راهنمایی دریافت کنید.
-            </p>
-          </div>
-        </div>
-      </section>
+    <>
+      {/* Toast Container */}
+      <Toast 
+        message={toast.message} 
+        type={toast.type} 
+        show={toast.show} 
+        onClose={hideToast} 
+      />
 
-      {/* Main Content */}
-      <section className="contact-main">
-        <div className="container">
-          <div className="contact-grid">
-            {/* Contact Information */}
-            <div className="contact-info-section">
-              <div className="info-card">
-                <h2 className="section-title">اطلاعات تماس</h2>
-                <p className="section-description">
-                  از طریق راه‌های مختلف می‌توانید با ما در ارتباط باشید
-                </p>
-
-                <div className="contact-methods">
-                  <div className="contact-method">
-                    <div className="method-icon email">
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                      </svg>
-                    </div>
-                    <div className="method-details">
-                      <h3>ایمیل</h3>
-                      <p>support@puzzlecode.ir</p>
-                      <span className="method-time">پاسخ در کمتر از ۲۴ ساعت</span>
-                    </div>
-                  </div>
-
-                  <div className="contact-method">
-                    <div className="method-icon phone">
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                      </svg>
-                    </div>
-                    <div className="method-details">
-                      <h3>تلفن پشتیبانی</h3>
-                      <p>۰۲۱-۸۸۷۷۶۶۵۵</p>
-                      <span className="method-time">شنبه تا چهارشنبه، ۹ تا ۱۷</span>
-                    </div>
-                  </div>
-
-                  <div className="contact-method">
-                    <div className="method-icon location">
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                      </svg>
-                    </div>
-                    <div className="method-details">
-                      <h3>آدرس دفتر</h3>
-                      <p>تهران، خیابان ولیعصر، پلاک ۱۲۳</p>
-                      <span className="method-time">بازدید با هماهنگی قبلی</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="business-hours">
-                  <h3>ساعات کاری</h3>
-                  <div className="hours-grid">
-                    <div className="hour-item">
-                      <span className="day">شنبه - چهارشنبه</span>
-                      <span className="time">۹:۰۰ - ۱۷:۰۰</span>
-                    </div>
-                    <div className="hour-item">
-                      <span className="day">پنج‌شنبه</span>
-                      <span className="time">۹:۰۰ - ۱۳:۰۰</span>
-                    </div>
-                    <div className="hour-item">
-                      <span className="day">جمعه</span>
-                      <span className="time">تعطیل</span>
-                    </div>
-                  </div>
-                </div>
+      <div className="contact-layout">
+        {/* Left: Contact Form */}
+        <div className="contact-left">
+          <h2>تماس با ما</h2>
+          <form className="contact-form" onSubmit={handleSubmit}>
+            <div className="form-group">
+              <div className={getInputWrapperClass('name')}>
+                <input
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  onFocus={() => handleFocus('name')}
+                  onBlur={() => handleBlur('name')}
+                  required
+                  disabled={loading}
+                  autoComplete="name"
+                />
+                <label>نام و نام خانوادگی</label>
               </div>
             </div>
-
-            {/* Contact Form */}
-            <div className="contact-form-section">
-              <div className="form-card">
-                <h2 className="section-title">ارسال پیام</h2>
-                <p className="section-description">
-                  لطفاً فرم زیر را با دقت تکمیل کنید تا بتوانیم بهترین پاسخ را ارائه دهیم
-                </p>
-
-                {submitStatus === 'success' && (
-                  <div className="alert alert-success">
-                    <div className="alert-icon">
-                      <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                      </svg>
-                    </div>
-                    <div className="alert-content">
-                      <h4>پیام شما ارسال شد</h4>
-                      <p>پیام شما با موفقیت دریافت شد. تیم پشتیبانی ما در اسرع وقت با شما تماس خواهد گرفت.</p>
-                    </div>
+            
+            <div className="form-group">
+              <div className={getInputWrapperClass('email')}>
+                <input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  onFocus={() => handleFocus('email')}
+                  onBlur={() => handleBlur('email')}
+                  required
+                  disabled={loading}
+                  autoComplete="email"
+                />
+                <label>آدرس ایمیل</label>
+              </div>
+            </div>
+            
+            <div className="form-group">
+              <div className={getInputWrapperClass('message')}>
+                <textarea
+                  name="message"
+                  value={form.message}
+                  onChange={handleChange}
+                  onFocus={() => handleFocus('message')}
+                  onBlur={() => handleBlur('message')}
+                  required
+                  rows={5}
+                  disabled={loading}
+                />
+                <label>متن پیام شما</label>
+              </div>
+            </div>
+            
+            <div className="form-group">
+              <div className="captcha-wrapper">
+                <div className="captcha-question">
+                  سوال امنیتی: {num1} + {num2} = ؟
+                </div>
+                <div className={`input-wrapper ${captchaFocused ? 'focused' : ''} ${captcha ? 'filled' : ''}`}>
+                  <input
+                    type="number"
+                    value={captcha}
+                    onChange={handleCaptchaChange}
+                    onFocus={handleCaptchaFocus}
+                    onBlur={handleCaptchaBlur}
+                    required
+                    disabled={loading}
+                    className="captcha-input"
+                    placeholder="جواب را وارد کنید"
+                    min="0"
+                    max="20"
+                  />
+                </div>
+                {captchaError && (
+                  <div className="captcha-error">
+                    {captchaError}
                   </div>
                 )}
-
-                <form className="contact-form" onSubmit={handleSubmit}>
-                  <div className="form-grid">
-                    <div className="form-group">
-                      <label htmlFor="name" className="form-label">
-                        نام و نام خانوادگی <span className="required">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        className="form-input"
-                        placeholder="نام کامل خود را وارد کنید"
-                        required
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label htmlFor="email" className="form-label">
-                        آدرس ایمیل <span className="required">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className="form-input"
-                        placeholder="example@email.com"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="subject" className="form-label">
-                      موضوع پیام <span className="required">*</span>
-                    </label>
-                    <select
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleInputChange}
-                      className="form-select"
-                      required
-                    >
-                      <option value="">موضوع مورد نظر را انتخاب کنید</option>
-                      <option value="general">سوال عمومی</option>
-                      <option value="technical">مشکل فنی</option>
-                      <option value="course">استعلام درباره دوره‌ها</option>
-                      <option value="partnership">درخواست همکاری</option>
-                      <option value="complaint">شکایت یا انتقاد</option>
-                      <option value="suggestion">پیشنهاد</option>
-                      <option value="other">سایر موارد</option>
-                    </select>
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="message" className="form-label">
-                      متن پیام <span className="required">*</span>
-                    </label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      className="form-textarea"
-                      rows="6"
-                      placeholder="لطفاً پیام خود را با جزئیات کامل ارسال کنید..."
-                      required
-                    ></textarea>
-                  </div>
-
-                  <button 
-                    type="submit" 
-                    className={`submit-button ${isSubmitting ? 'loading' : ''}`}
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <span className="loading-spinner"></span>
-                        در حال ارسال...
-                      </>
-                    ) : (
-                      <>
-                        <span className="button-icon">
-                          <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
-                          </svg>
-                        </span>
-                        ارسال پیام
-                      </>
-                    )}
-                  </button>
-                </form>
               </div>
             </div>
-          </div>
+            
+            <button type="submit" disabled={loading}>
+              {loading ? (
+                <>
+                  در حال ارسال<span className="loading-dots"></span>
+                </>
+              ) : (
+                'ارسال پیام'
+              )}
+            </button>
+          </form>
         </div>
-      </section>
 
-      {/* FAQ Section */}
-      <section className="faq-section">
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">سوالات متداول</h2>
-            <p className="section-description">
-              پاسخ سوالات رایج کاربران را در اینجا مشاهده کنید
+        {/* Right: Info Boxes */}
+        <div className="contact-right">
+          {/* Company Info */}
+          <div className="info-box">
+            <h3>راه‌های ارتباطی</h3>
+            <ul>
+              <li>
+                <span role="img" aria-label="email">📧</span>
+                <a href="mailto:support@example.com">support@example.com</a>
+              </li>
+              <li>
+                <span role="img" aria-label="phone">📞</span>
+                <a href="tel:+989121234567">0912-123-4567</a>
+              </li>
+              <li>
+                <span role="img" aria-label="instagram">📸</span>
+                <a href="https://instagram.com/yourpage" target="_blank" rel="noopener noreferrer">
+                  صفحه اینستاگرام
+                </a>
+              </li>
+              <li>
+                <span role="img" aria-label="telegram">📣</span>
+                <a href="https://t.me/yourchannel" target="_blank" rel="noopener noreferrer">
+                  کانال تلگرام
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          {/* Working Hours */}
+          <div className="info-box">
+            <h3>ساعات پاسخگویی</h3>
+            <p>
+              <strong>شنبه تا چهارشنبه:</strong> ۹:۰۰ تا ۱۸:۰۰<br />
+              <strong>پنج‌شنبه:</strong> ۹:۰۰ تا ۱۴:۰۰<br />
+              <strong>جمعه:</strong> تعطیل
             </p>
           </div>
           
-          <div className="faq-grid">
-            <div className="faq-card">
-              <div className="faq-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/>
-                </svg>
-              </div>
-              <h3>چه مدت زمان برای پاسخ‌گویی نیاز است؟</h3>
-              <p>معمولاً در کمتر از ۲۴ ساعت به پیام‌های شما پاسخ می‌دهیم. برای موارد فوری، از شماره تلفن استفاده کنید.</p>
-            </div>
-
-            <div className="faq-card">
-              <div className="faq-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                </svg>
-              </div>
-              <h3>آیا خدمات شما رایگان است؟</h3>
-              <p>مشاوره اولیه و راهنمایی‌های کلی رایگان است. برای خدمات تخصصی، هزینه‌ها متناسب با نوع سرویس تعیین می‌شود.</p>
-            </div>
-
-            <div className="faq-card">
-              <div className="faq-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                </svg>
-              </div>
-              <h3>چگونه می‌توانم درخواست همکاری کنم؟</h3>
-              <p>برای همکاری، لطفاً موضوع "درخواست همکاری" را انتخاب کرده و جزئیات پیشنهاد خود را ارسال کنید.</p>
-            </div>
-
-            <div className="faq-card">
-              <div className="faq-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                </svg>
-              </div>
-              <h3>آیا امکان بازدید حضوری وجود دارد؟</h3>
-              <p>بله، با هماهنگی قبلی می‌توانید از دفتر ما بازدید کنید. لطفاً قبل از مراجعه با ما تماس بگیرید.</p>
-            </div>
+          {/* Privacy Note */}
+          <div className="info-box">
+            <h3>حفظ حریم خصوصی</h3>
+            <p>
+              تمامی اطلاعات ارسالی شما کاملاً محرمانه بوده و تنها برای پاسخگویی بهتر به درخواست شما استفاده خواهد شد.
+            </p>
+          </div>
+          
+          {/* Response Time */}
+          <div className="info-box">
+            <h3>زمان پاسخگویی</h3>
+            <p>
+              پاسخ به پیام‌های شما معمولاً <strong>کمتر از ۲۴ ساعت</strong> داده می‌شود. در روزهای تعطیل ممکن است این زمان تا ۴۸ ساعت افزایش یابد.
+            </p>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </>
   );
 };
 
