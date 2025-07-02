@@ -1,8 +1,11 @@
+import React from 'react';
+import AdminNotificationPanel from './AdminNotificationPanel';
+
 const AdminDashboard = ({ user }) => (
-  <div>
-    <h1>داشبورد ادمین</h1>
-    <p>خوش آمدید مدیر {user.username}!</p>
-    {/* Admin features will go here */}
+  <div className="dashboard-main">
+    <h1>داشبورد مدیریت</h1>
+    <AdminNotificationPanel />
+    {/* You can add more admin features here */}
   </div>
 );
 

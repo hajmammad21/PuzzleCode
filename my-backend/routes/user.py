@@ -98,3 +98,4 @@ def delete_notification(notif_id):
     db.session.delete(notif)
     db.session.commit()
     return jsonify({"message": "Notification deleted"})
+

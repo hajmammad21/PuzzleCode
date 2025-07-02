@@ -1,0 +1,272 @@
+/* UserDashboard.css - Dark Theme Classic Style */
+
+/* Main dashboard container */
+.dashboard-main {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #e0e0e0;
+  padding: 24px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard-main h1 {
+  color: #64ffda;
+}
+
+.dashboard-main p {
+  color: #b0b0b0;
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+/* Dashboard grid layout - centered with max-width */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-top: 32px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Card styling */
+.card {
+  background: rgba(26, 26, 38, 0.95);
+  border: 1px solid #2afadf22;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px solid #404040;
+  box-shadow: 0 2px 8px rgba(36, 255, 218, 0.05), 0 2px 12px rgba(20, 20, 40, 0.2);
+  transition: box-shadow 0.3s ease;
+  max-width: 100%;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Change Password Form Styling */
+.card form {
+  max-width: 100%;
+  margin-top: 0;
+}
+
+.card form h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  font-weight: 500;
+  border-bottom: 2px solid #404040;
+  padding-bottom: 8px;
+}
+
+.card form div {
+  margin-bottom: 16px;
+}
+
+.card form label {
+  display: block;
+  color: #d0d0d0;
+  font-weight: 500;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+}
+
+.card form input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  background: #1a1a1a;
+  border: 1px solid #505050;
+  border-radius: 4px;
+  color: #e0e0e0;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.card form input[type="password"]:focus {
+  outline: none;
+  border-color: #666666;
+  box-shadow: 0 0 0 2px rgba(102, 102, 102, 0.2);
+}
+
+.card form input[type="password"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.card form button[type="submit"] {
+  background: #404040;
+  color: #ffffff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  margin-top: 8px;
+}
+
+.card form button[type="submit"]:hover:not(:disabled) {
+  background: #505050;
+}
+
+.card form button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Toast Notifications */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  border-radius: 4px;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 0.95rem;
+  z-index: 1000;
+  animation: slideIn 0.3s ease-out;
+  max-width: 300px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.toast.success {
+  background: linear-gradient(135deg, #2afadf 0%, #4fc3f7 100%);
+  color: #1a1a2a;
+  border: none;
+}
+
+.toast.error {
+  background: linear-gradient(135deg, #ed4264 0%, #ffedbc 100%);
+  color: #1a1a2a;
+  border: none;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Notification Section Styling */
+.card h3 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  font-weight: 500;
+  border-bottom: 2px solid #404040;
+  padding-bottom: 8px;
+}
+
+.card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card li {
+  background: #1a1a1a;
+  border: 1px solid #404040;
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.card li:hover {
+  background: #252525;
+}
+
+.card li span:first-child {
+  color: #e0e0e0;
+  font-size: 1rem;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.card li span:nth-child(2) {
+  color: #888888;
+  font-size: 0.85rem;
+  display: block;
+}
+
+.card li button {
+  background: #666666;
+  color: #ffffff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  margin-top: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.card li button:hover {
+  background: #777777;
+}
+
+/* Loading and error states */
+.card > div:first-child {
+  color: #b0b0b0;
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+}
+
+/* Empty state for notifications */
+.card p {
+  color: #888888;
+  text-align: center;
+  font-style: italic;
+  margin: 20px 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .dashboard-main {
+    padding: 16px;
+  }
+  
+  .dashboard-main h1 {
+    font-size: 1.5rem;
+  }
+  
+  .card {
+    padding: 16px;
+  }
+  
+  .card form input[type="password"] {
+    padding: 10px;
+  }
+  
+  .card form button[type="submit"] {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+  
+  .toast {
+    right: 16px;
+    top: 16px;
+    max-width: calc(100vw - 32px);
+  }
+}

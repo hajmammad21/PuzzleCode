@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ChangePasswordForm = ({ showToast }) => {
+const ChangePasswordForm = ({ onSuccess, onError }) => {
   const [form, setForm] = useState({
     old_password: '',
     new_password: '',
@@ -16,11 +16,11 @@ const ChangePasswordForm = ({ showToast }) => {
   const handleSubmit = async e => {
     e.preventDefault();
     if (!form.old_password || !form.new_password) {
-      showToast && showToast('رمزهای عبور را وارد کنید', 'error');
+      onError && onError('رمزهای عبور را وارد کنید', 'error');
       return;
     }
     if (form.new_password !== form.confirm_password) {
-      showToast && showToast('رمز جدید و تکرار آن یکسان نیستند', 'error');
+      onError && onError('رمز جدید و تکرار آن یکسان نیستند', 'error');
       return;
     }
 
@@ -41,13 +41,13 @@ const ChangePasswordForm = ({ showToast }) => {
 
       const data = await response.json();
       if (response.ok) {
-        showToast && showToast(data.message || 'رمز عبور با موفقیت تغییر کرد', 'success');
+        onSuccess && onSuccess(data.message || 'رمز عبور با موفقیت تغییر کرد', 'success');
         setForm({ old_password: '', new_password: '', confirm_password: '' });
       } else {
-        showToast && showToast(data.message || 'خطا در تغییر رمز عبور', 'error');
+        onError && onError(data.message || 'خطا در تغییر رمز عبور', 'error');
       }
     } catch (err) {
-      showToast && showToast('خطای شبکه', 'error');
+      onError && onError('خطای شبکه', 'error');
     } finally {
       setLoading(false);
     }
