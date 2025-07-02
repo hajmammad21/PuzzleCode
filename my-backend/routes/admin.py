@@ -33,3 +33,4 @@ def send_notification():
 
     db.session.commit()
     return jsonify({'message': 'Notification sent'}), 200
+
