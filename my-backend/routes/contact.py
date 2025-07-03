@@ -11,11 +11,12 @@ def submit_contact():
     name = data.get('name')
     email = data.get('email')
     message = data.get('message')
+    phone = data.get('phone')
 
     if not name or not email or not message:
         return jsonify({'message': 'همه فیلدها الزامی هستند'}), 400
 
-    msg = ContactMessage(name=name, email=email, message=message)
+    msg = ContactMessage(name=name, email=email, message=message, phone=phone)
     db.session.add(msg)
     db.session.commit()
     return jsonify({'message': 'پیام شما ارسال شد!'}), 201
@@ -38,6 +39,7 @@ def get_messages():
         'id': m.id,
         'name': m.name,
         'email': m.email,
+        'phone': m.phone,
         'message': m.message,
         'created_at': m.created_at.isoformat(),
         'is_read': m.is_read

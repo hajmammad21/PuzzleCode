@@ -287,6 +287,7 @@ body {
 }
 
 .contact-right {
+  max-width: 400px;
   flex: 1;
   min-width: 300px;
   display: flex;

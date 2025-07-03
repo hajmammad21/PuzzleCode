@@ -5,12 +5,14 @@ const Contact = () => {
   const [form, setForm] = useState({
     name: '',
     email: '',
+    phone: '',
     message: ''
   });
   const [loading, setLoading] = useState(false);
   const [fieldStates, setFieldStates] = useState({
     name: { focused: false, filled: false },
     email: { focused: false, filled: false },
+    phone: { focused: false, filled: false },
     message: { focused: false, filled: false }
   });
 
@@ -18,8 +20,8 @@ const Contact = () => {
   const [toast, setToast] = useState({ show: false, message: '', type: '' });
 
   // Math captcha states
-  const [num1] = useState(() => Math.floor(Math.random() * 10 + 1));
-  const [num2] = useState(() => Math.floor(Math.random() * 10 + 1));
+  const [num1, setNum1] = useState(() => Math.floor(Math.random() * 10 + 1));
+  const [num2, setNum2] = useState(() => Math.floor(Math.random() * 10 + 1));
   const [captcha, setCaptcha] = useState('');
   const [captchaError, setCaptchaError] = useState('');
   const [captchaFocused, setCaptchaFocused] = useState(false);
@@ -48,12 +50,16 @@ const Contact = () => {
         focused: fieldStates.email.focused, 
         filled: form.email.trim() !== '' 
       },
+      phone:{
+        focused: false, filled: false,
+        filled: form.phone.trim() !== '' 
+      },
       message: { 
         focused: fieldStates.message.focused, 
         filled: form.message.trim() !== '' 
       }
     });
-  }, [form.name, form.email, form.message]);
+  }, [form.name, form.email,form.phone, form.message]);
 
   const handleChange = (e) => {
     setForm(prev => ({
@@ -149,8 +155,11 @@ const Contact = () => {
         setFieldStates({
           name: { focused: false, filled: false },
           email: { focused: false, filled: false },
+          phone: { focused: false, filled: false },
           message: { focused: false, filled: false }
         });
+          setNum1(Math.floor(Math.random() * 10 + 1));
+          setNum2(Math.floor(Math.random() * 10 + 1));
       } else {
         showToast(
           data.message || 'متأسفانه ارسال پیام با خطا مواجه شد. لطفاً دوباره تلاش کنید.',
@@ -236,6 +245,22 @@ const Contact = () => {
                 <label>آدرس ایمیل</label>
               </div>
             </div>
+            <div className="form-group">
+
+  <div className={getInputWrapperClass('phone')}>
+    <input
+      type="tel"
+      name="phone"
+      value={form.phone}
+      onChange={handleChange}
+      onFocus={() => handleFocus('phone')}
+      onBlur={() => handleBlur('phone')}
+      disabled={loading}
+      autoComplete="tel"
+    />
+    <label>شماره تماس (اختیاری)</label>
+  </div>
+</div>
             
             <div className="form-group">
               <div className={getInputWrapperClass('message')}>

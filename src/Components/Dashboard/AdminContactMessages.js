@@ -64,6 +64,11 @@ const AdminContactMessages = () => {
           >
             <div><b>نام:</b> {msg.name}</div>
             <div><b>ایمیل:</b> {msg.email}</div>
+            {msg.phone && (
+  <div>
+    <b>تلفن:</b> <a href={`tel:${msg.phone}`} style={{ color: "#64ffda" }}>{msg.phone}</a>
+  </div>
+)}
             <div><b>پیام:</b> {msg.message}</div>
             <div style={{ fontSize: 12, color: '#aaa', marginTop: 4 }}>
               {new Date(msg.created_at).toLocaleString('fa-IR')}
