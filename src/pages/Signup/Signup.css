@@ -49,7 +49,7 @@
   overflow: hidden;
   width: 100%;
   min-height: auto;
-  margin-top: 70px;
+  margin-bottom: 80px;
 }
 
 .signup-card::before {

@@ -8,6 +8,7 @@ from routes.user import user_bp
 from routes.admin import admin_bp
 from routes.contact import contact_bp
 from flask_cors import CORS
+from routes.python_missions import python_missions_bp
 
 def create_app():
     app = Flask(__name__)
@@ -24,7 +25,7 @@ def create_app():
     app.register_blueprint(user_bp, url_prefix='/api/user')
     app.register_blueprint(admin_bp, url_prefix='/api/admin')
     app.register_blueprint(contact_bp, url_prefix='/api')
-    
+    app.register_blueprint(python_missions_bp, url_prefix='/api')
 
     return app
 

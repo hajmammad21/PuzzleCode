@@ -1,0 +1,145 @@
+.py-lesson-list {
+  max-width: 1080px;
+  margin: 56px auto 0;
+  padding: 0 16px;
+}
+.py-lesson-header {
+  color: #64ffda;
+  font-size: 2rem;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 44px;
+  letter-spacing: 1px;
+}
+.lesson-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 34px 34px;
+}
+.lesson-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(115deg, #181a2a 60%, #23243a 100%);
+  border-radius: 18px;
+  box-shadow: 0 6px 40px #191b2f44;
+  padding: 28px 18px 20px 18px;
+  transition: box-shadow 0.18s, border 0.18s;
+  border: 2px solid #1d2a32;
+  min-height: 435px;
+  min-width: 312px;
+}
+.lesson-card:hover {
+  box-shadow: 0 10px 42px #33ffd955, 0 0 0 3px #64ffda66;
+  border: 2.5px solid #64ffda;
+}
+.lesson-card-img {
+  min-width: 192px;
+  min-height: 192px;
+  flex-shrink: 0;
+  width: 78px;
+  height: 78px;
+  background: #10122b;
+  border-radius: 14px;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 16px #0003;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.lesson-card-img img {
+  width: 62px;
+  height: 62px;
+  object-fit: contain;
+  display: block;
+}
+.lesson-card-body {
+  flex: 1;
+  width: 100%;
+  text-align: center;
+  text-align: right;
+}
+.lesson-title {
+  color: #64ffda;
+  font-size: 1.13rem;
+  font-weight: 800;
+  margin-bottom: 7px;
+}
+.lesson-info {
+  color: #e0e0e0;
+  font-size: 1.04rem;
+  margin-bottom: 13px;
+  min-height: 48px;
+}
+.lesson-title, .lesson-info {
+  text-align: center;
+}
+.lesson-start-btn {
+  background: linear-gradient(90deg, #64ffda 0%, #4fc3f7 100%);
+  color: #181a2a;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 34px;
+  font-size: 1.09rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 1px 7px #1112;
+  transition: filter 0.15s, box-shadow 0.15s;
+  margin-top: 12px;
+  display: block;
+  margin: 18px auto 0 auto;
+}
+.lesson-start-btn:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 4px 20px #64ffda33;
+}
+
+.py-lesson-pagination {
+  margin: 40px 0 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+}
+.py-lesson-pagination button {
+  background: #23243a;
+  border: 1.5px solid #64ffda55;
+  color: #64ffda;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: border 0.15s, color 0.15s, background 0.18s;
+}
+.py-lesson-pagination button:disabled {
+  color: #b0eaff;
+  background: #23243a99;
+  border: 1.5px solid #2afadf22;
+  cursor: not-allowed;
+}
+.py-lesson-pagination span {
+  color: #b0eaff;
+  font-size: 1.07rem;
+}
+.py-center {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 48px 0;
+}
+
+@media (max-width: 900px) {
+  .lesson-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 650px) {
+  .lesson-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .lesson-card {
+    padding: 16px 5px 14px 5px;
+  }
+}

@@ -17,7 +17,7 @@ const Contact = () => {
   });
 
   // Toast state
-  const [toast, setToast] = useState({ show: false, message: '', type: '' });
+const [toast, setToast] = useState({ show: false, message: '', type: '' });
 
   // Math captcha states
   const [num1, setNum1] = useState(() => Math.floor(Math.random() * 10 + 1));
@@ -27,13 +27,10 @@ const Contact = () => {
   const [captchaFocused, setCaptchaFocused] = useState(false);
 
   // Toast functions
-  const showToast = (message, type) => {
-    setToast({ show: true, message, type });
-    // Auto hide after 5 seconds
-    setTimeout(() => {
-      setToast({ show: false, message: '', type: '' });
-    }, 5000);
-  };
+const showToast = (message, type) => {
+  setToast({ show: true, message, type });
+  setTimeout(() => setToast({ show: false, message: '', type: '' }), 4000);
+};
 
   const hideToast = () => {
     setToast({ show: false, message: '', type: '' });
@@ -149,7 +146,7 @@ const Contact = () => {
           data.message || 'پیام شما با موفقیت ارسال شد! به زودی با شما تماس خواهیم گرفت.',
           'success'
         );
-        setForm({ name: '', email: '', message: '' });
+        setForm({ name: '', email: '', phone: '', message: '' });
         setCaptcha('');
         setCaptchaError('');
         setFieldStates({

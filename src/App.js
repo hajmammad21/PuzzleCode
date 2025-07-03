@@ -6,6 +6,7 @@ import Signup from './pages/Signup/Signup';
 import Login from './pages/Login/Login';
 import Contact from './pages/Contact/Contact';
 import Dashboard from './Components/Dashboard/Dashboard';
+import SeasonList from './pages/SeasonList/SeasonList';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/python" element={<SeasonList />} />
       </Routes>
     </Router>
   );
