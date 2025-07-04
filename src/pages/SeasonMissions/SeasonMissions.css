@@ -1,0 +1,107 @@
+.py-mission-list {
+  max-width: 750px;
+  margin: 42px auto 0;
+  padding: 0 10px;
+}
+.season-top-box {
+  background: linear-gradient(120deg, #22233b 75%, #16213e 100%);
+  border-radius: 14px;
+  box-shadow: 0 4px 22px #181b2f33;
+  padding: 30px 20px 20px 20px;
+  text-align: center;
+  margin-bottom: 32px;
+}
+.season-title {
+  color: #64ffda;
+  font-size: 1.45rem;
+  font-weight: 900;
+  margin-bottom: 7px;
+  letter-spacing: 1px;
+}
+.season-desc {
+  color: #d0f5ee;
+  font-size: 1.13rem;
+  margin-bottom: 0;
+}
+
+.missions-box {
+  background: linear-gradient(120deg, #181a2a 80%, #23243a 100%);
+  border-radius: 15px;
+  box-shadow: 0 4px 22px #181b2f33;
+  padding: 24px 0 10px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+.mission-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 15px 24px;
+  border-radius: 11px;
+  background: #1d1e33;
+  color: #e0e0e0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px #1e232e13;
+  transition: background 0.15s, box-shadow 0.14s;
+  cursor: pointer;
+}
+.mission-row:hover:not(.locked) {
+  background: #1de9b6aa;
+  color: #121427;
+  box-shadow: 0 4px 20px #64ffda33;
+}
+.mission-row.locked {
+  opacity: 0.62;
+  background: #23244c;
+  color: #7cc;
+  cursor: not-allowed;
+}
+.mission-row.solved {
+  border: 2px solid #29d259;
+  box-shadow: 0 0 15px #21ea7799;
+}
+.mission-index {
+  font-weight: 800;
+  font-size: 1.18rem;
+  width: 28px;
+  text-align: center;
+  color: #64ffda;
+  background: #18253d;
+  border-radius: 8px;
+  margin-left: 7px;
+}
+.mission-title {
+  flex: 1;
+  text-align: right;
+  font-size: 1.08rem;
+}
+.mission-difficulty {
+  font-size: 0.95rem;
+  color: #ffd15c;
+  margin-right: 15px;
+}
+.mission-status {
+  font-size: 0.98rem;
+  margin-left: 10px;
+}
+.mission-status.solved {
+  color: #2affb8;
+  font-weight: bold;
+}
+.mission-status.locked {
+  color: #ff4b64;
+  font-size: 1.18rem;
+}
+.py-center {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 48px 0;
+}
+@media (max-width: 600px) {
+  .py-mission-list { max-width: 99vw; }
+  .season-top-box { padding: 22px 7px 14px 7px; }
+  .missions-box { padding: 14px 0 6px 0; }
+  .mission-row { padding: 10px 10px; font-size: 1rem; }
+}

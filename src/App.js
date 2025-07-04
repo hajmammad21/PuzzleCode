@@ -7,6 +7,7 @@ import Login from './pages/Login/Login';
 import Contact from './pages/Contact/Contact';
 import Dashboard from './Components/Dashboard/Dashboard';
 import SeasonList from './pages/SeasonList/SeasonList';
+import SeasonMissions from './pages/SeasonMissions/SeasonMissions';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/python" element={<SeasonList />} />
+        <Route path="/python/season/:seasonId" element={<SeasonMissions />} />
       </Routes>
     </Router>
   );
