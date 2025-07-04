@@ -1,11 +1,15 @@
 import React from 'react';
 import './Landing.css';
+import SnakeBackground from './SnakeBackground'; // Add this import
 
 const Landing = () => {
   return (
     <div className="landing-container">
       {/* بخش معرفی اصلی */}
       <section className="hero-section" id="home">
+        {/* Add the Snake Background component */}
+        <SnakeBackground />
+        
         <div className="hero-content">
           <div className="hero-text">
             <h1><span className="highlight">پازل‌ کد</span> را کشف کن</h1>

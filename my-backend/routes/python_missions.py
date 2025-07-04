@@ -2,12 +2,11 @@ from flask import Blueprint, jsonify
 
 python_missions_bp = Blueprint('python_missions', __name__)
 
-# Example seasons
 SEASONS = [
     {
         "id": 1,
         "title": "فصل اول : حروف و اعداد",
-        "description": "شروع مسیر پایتون با کار با رشته‌ها و اعداد صحیح.",
+        "description": "STRINGS AND INTEGERS",
         "image_url": "/static/images/season1.png"
     },
     {
@@ -18,7 +17,6 @@ SEASONS = [
     }
 ]
 
-# Example missions
 MISSIONS = {
     1: [
         {"id": 101, "title": "چاپ یک رشته", "difficulty": "آسان", "is_locked": False, "is_solved": False},
