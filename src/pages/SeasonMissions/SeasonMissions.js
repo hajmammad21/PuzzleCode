@@ -38,7 +38,7 @@ const SeasonMissions = () => {
             style={{cursor: mission.is_locked ? 'not-allowed' : 'pointer'}}
           >
             <span className="mission-index">{idx + 1}</span>
-            <span className="mission-title">{mission.title}</span>
+            <span className="mission-title2">{mission.title}</span>
             <span className="mission-difficulty">{mission.difficulty}</span>
             {mission.is_solved && <span className="mission-status solved">حل شد</span>}
             {mission.is_locked && <span className="mission-status locked">🔒</span>}

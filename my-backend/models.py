@@ -27,3 +27,21 @@ class ContactMessage(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     is_read = db.Column(db.Boolean, default=False)
     phone = db.Column(db.String(30), nullable=True)
+
+class Mission(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    season_id = db.Column(db.Integer, nullable=False)
+    title = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.Text)
+    image_url = db.Column(db.String(255))
+    question = db.Column(db.Text)
+    hint = db.Column(db.Text)
+    starter_code = db.Column(db.Text)
+    difficulty = db.Column(db.String(50))
+    is_locked = db.Column(db.Boolean, default=False)
+
+class Season(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.Text)
+    image_url = db.Column(db.String(255))

@@ -1,0 +1,191 @@
+.py-mission-view {
+  min-width: 900px;
+  max-width: 670px;
+  margin: 48px auto 0;
+  padding: 30px 18px 60px 18px;
+  background: linear-gradient(120deg, #181a2a 80%, #23243a 100%);
+  border-radius: 16px;
+  box-shadow: 0 8px 50px #1112, 0 1.5px 9px #29ffd555;
+  color: #e0e0e0;
+}
+
+.mission-title {
+  color: #64ffda;
+  font-size: 2rem;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
+}
+
+.mission-desc {
+  color: #b0eaff;
+  background: #23243a;
+  border-radius: 10px;
+  padding: 21px 22px 20px 22px;
+  font-size: 1.14rem;
+  margin-bottom: 36px;
+  box-shadow: 0 3px 18px #1e232e11;
+  line-height: 2.1;
+  text-align: center;
+}
+
+.mission-meta-bar {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.mission-meta-bar span {
+  font-size: 1.06rem;
+  color: #29ffd5;
+  background: #202539;
+  padding: 6px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 2px 7px #20ffed13;
+}
+
+.mission-code-editor {
+  background: #181a2a;
+  border-radius: 10px;
+  min-height: 170px;
+  padding: 22px;
+  font-family: 'Fira Mono', 'Consolas', monospace;
+  color: #f8f8f8;
+  font-size: 1.05rem;
+  margin-bottom: 27px;
+  box-shadow: 0 1.5px 9px #64ffda11;
+}
+
+.mission-actions {
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+  margin-bottom: 15px;
+}
+.mission-submit-btn {
+  background: linear-gradient(90deg, #64ffda 0%, #4fc3f7 100%);
+  color: #181a2a;
+  border: none;
+  border-radius: 8px;
+  padding: 13px 44px;
+  font-size: 1.07rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 1px 7px #1112;
+  transition: filter 0.15s, box-shadow 0.15s;
+}
+.mission-submit-btn:hover {
+  filter: brightness(1.09);
+  box-shadow: 0 4px 20px #64ffda33;
+}
+
+.mission-io-section {
+  background: #23243a;
+  border-radius: 10px;
+  padding: 16px 20px 10px 20px;
+  color: #b0eaff;
+  margin-bottom: 21px;
+}
+.mission-io-label {
+  font-weight: bold;
+  color: #64ffda;
+  margin-bottom: 7px;
+  display: block;
+}
+.mission-io-example {
+  margin-bottom: 8px;
+  font-family: 'Fira Mono', monospace;
+  font-size: 1.04rem;
+  background: #181a2a;
+  border-radius: 6px;
+  padding: 8px 13px;
+}
+
+@media (max-width: 700px) {
+  .py-mission-view {
+    max-width: 98vw;
+    padding: 12px 3vw 50px 3vw;
+  }
+  .mission-desc {
+    padding: 13px 8px 12px 8px;
+    font-size: 1.04rem;
+  }
+}
+.py-center {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 48px 0;
+}
+.mission-header {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin-bottom: 28px;
+  justify-content: center;
+}
+.mission-header-img {
+  width: 86px;
+  height: 86px;
+  background: #181a2a;
+  border-radius: 16px;
+  object-fit: contain;
+  box-shadow: 0 4px 18px #0005;
+}
+.mission-question-box {
+  background: #23243a;
+  border-left: 6px solid #64ffda;
+  border-radius: 10px;
+  margin: 18px 0 24px 0;
+  padding: 16px 20px 12px 18px;
+  color: #f2f2f2;
+  font-size: 1.08rem;
+  box-shadow: 0 2px 12px #3de4c633;
+  text-align: right;
+}
+.mission-hint-box {
+  margin-bottom: 22px;
+  text-align: right;
+}
+.hint-toggle-btn {
+  background: linear-gradient(90deg, #64ffda 0%, #4fc3f7 100%);
+  color: #23243a;
+  border: none;
+  border-radius: 7px;
+  font-weight: 700;
+  font-size: 1.01rem;
+  padding: 8px 28px;
+  margin-bottom: 10px;
+  margin-right: 3px;
+  cursor: pointer;
+  box-shadow: 0 1px 7px #1112;
+  transition: filter 0.15s;
+}
+.hint-toggle-btn:hover {
+  filter: brightness(1.1);
+}
+.hint-content {
+  margin-top: 10px;
+  background: #212b32;
+  color: #b0eaff;
+  border-radius: 8px;
+  padding: 13px 20px 12px 20px;
+  font-size: 1.02rem;
+  box-shadow: 0 2px 8px #64ffda15;
+}
+.mission-image-wide-wrap {
+  margin: 20px 0 30px 0;
+  text-align: center;
+}
+.mission-image-wide {
+  width: 98%;
+  min-width: 850px;
+  border-radius: 18px;
+  background: #181a2a;
+  object-fit: contain;
+  box-shadow: 0 4px 30px #0004, 0 2px 16px #29ffd522;
+  display: block;
+  margin: 0 auto;
+}

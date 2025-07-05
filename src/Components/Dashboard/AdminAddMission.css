@@ -1,0 +1,279 @@
+/* AdminAddMission.css */
+
+/* Main container */
+.admin-add-mission {
+  background: rgba(26, 26, 38, 0.95);
+  border: 1px solid #2afadf22;
+  box-shadow: 0 2px 8px rgba(36, 255, 218, 0.05), 0 2px 12px rgba(20, 20, 40, 0.2);
+  border-radius: 12px;
+  padding: 24px;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Headers */
+.admin-add-mission h2 {
+  color: #64ffda;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  border-bottom: 2px solid #64ffda;
+  padding-bottom: 10px;
+}
+
+/* Form styling */
+.admin-add-mission form {
+  background: rgba(33, 36, 58, 0.6);
+  border: 1px solid #2afadf22;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+/* Input and textarea styling */
+.admin-add-mission input,
+.admin-add-mission textarea,
+.admin-add-mission select {
+  width: 100%;
+  padding: 12px 16px;
+  margin: 8px 0 16px 0;
+  background: rgba(22, 22, 30, 0.8);
+  border: 1px solid #2afadf44;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.admin-add-mission input:focus,
+.admin-add-mission textarea:focus,
+.admin-add-mission select:focus {
+  outline: none;
+  border-color: #64ffda;
+  box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.2);
+  background: rgba(22, 22, 30, 0.95);
+}
+
+.admin-add-mission input::placeholder,
+.admin-add-mission textarea::placeholder {
+  color: #888;
+  opacity: 0.8;
+}
+
+/* Textarea specific styling */
+.admin-add-mission textarea {
+  min-height: 80px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+/* Select dropdown styling */
+.admin-add-mission select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364ffda' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+/* Label styling */
+.admin-add-mission label {
+  display: block;
+  color: #4fc3f7;
+  font-weight: 500;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+/* Checkbox styling */
+.admin-add-mission input[type="checkbox"] {
+  width: auto;
+  margin-right: 8px;
+  margin-left: 0;
+  transform: scale(1.2);
+  accent-color: #64ffda;
+}
+
+.admin-add-mission label:has(input[type="checkbox"]) {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+
+/* Button styling */
+.admin-add-mission button {
+  padding: 12px 24px;
+  background: linear-gradient(90deg, #64ffda 0%, #4fc3f7 100%);
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #111;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.admin-add-mission button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(100, 255, 218, 0.3);
+}
+
+.admin-add-mission button:active {
+  transform: translateY(0);
+}
+
+/* Delete button specific styling */
+.admin-add-mission button.delete-btn {
+  background: linear-gradient(90deg, #ed4343 0%, #ff6b6b 100%);
+  color: white;
+}
+
+.admin-add-mission button.delete-btn:hover {
+  box-shadow: 0 4px 12px rgba(237, 67, 67, 0.3);
+}
+
+/* Secondary buttons (Cancel, etc.) */
+.admin-add-mission button.secondary {
+  background: rgba(79, 195, 247, 0.2);
+  color: #4fc3f7;
+  border: 1px solid #4fc3f7;
+}
+
+.admin-add-mission button.secondary:hover {
+  background: rgba(79, 195, 247, 0.3);
+  box-shadow: 0 4px 12px rgba(79, 195, 247, 0.2);
+}
+
+/* Table styling */
+.admin-add-mission table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(33, 36, 58, 0.6);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+.admin-add-mission th,
+.admin-add-mission td {
+  padding: 12px 16px;
+  text-align: right;
+  border-bottom: 1px solid #2afadf22;
+}
+
+.admin-add-mission th {
+  background: rgba(100, 255, 218, 0.1);
+  color: #64ffda;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.admin-add-mission td {
+  color: #e0e0e0;
+  font-size: 13px;
+}
+
+.admin-add-mission tr:hover {
+  background: rgba(100, 255, 218, 0.05);
+}
+
+/* Editing row styling */
+.admin-add-mission tr.editing {
+  background: rgba(79, 195, 247, 0.1);
+}
+
+.admin-add-mission tr.editing input {
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+/* Horizontal rule styling */
+.admin-add-mission hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #64ffda, transparent);
+  margin: 32px 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .admin-add-mission {
+    padding: 16px;
+  }
+  
+  .admin-add-mission form {
+    padding: 16px;
+  }
+  
+  .admin-add-mission table {
+    font-size: 12px;
+  }
+  
+  .admin-add-mission th,
+  .admin-add-mission td {
+    padding: 8px 12px;
+  }
+  
+  .admin-add-mission button {
+    padding: 10px 20px;
+    font-size: 13px;
+  }
+}
+
+/* Status messages */
+.admin-add-mission .status-message {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+  font-weight: 500;
+}
+
+.admin-add-mission .status-message.success {
+  background: rgba(41, 210, 89, 0.1);
+  border: 1px solid #29d259;
+  color: #29d259;
+}
+
+.admin-add-mission .status-message.error {
+  background: rgba(237, 67, 67, 0.1);
+  border: 1px solid #ed4343;
+  color: #ed4343;
+}
+
+/* Loading state */
+.admin-add-mission .loading {
+  text-align: center;
+  color: #64ffda;
+  font-style: italic;
+  margin: 20px 0;
+}
+
+/* Form sections */
+.admin-add-mission .form-section {
+  margin-bottom: 24px;
+}
+
+.admin-add-mission .form-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.admin-add-mission .form-row .form-field {
+  flex: 1;
+}
+
+@media (max-width: 600px) {
+  .admin-add-mission .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+}

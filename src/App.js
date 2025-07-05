@@ -8,6 +8,7 @@ import Contact from './pages/Contact/Contact';
 import Dashboard from './Components/Dashboard/Dashboard';
 import SeasonList from './pages/SeasonList/SeasonList';
 import SeasonMissions from './pages/SeasonMissions/SeasonMissions';
+import MissionView from './pages/MissionView/MissionView';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/python" element={<SeasonList />} />
         <Route path="/python/season/:seasonId" element={<SeasonMissions />} />
+        <Route path="/python/mission/:missionId" element={<MissionView />} />
       </Routes>
     </Router>
   );
