@@ -1,8 +1,17 @@
 .py-lesson-list {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.py-lesson-content {
+  position: relative;
+  z-index: 1;
   max-width: 1080px;
   margin: 56px auto 0;
   padding: 0 16px;
 }
+
 .py-lesson-header {
   color: #64ffda;
   font-size: 2rem;
@@ -10,71 +19,126 @@
   text-align: center;
   margin-bottom: 44px;
   letter-spacing: 1px;
+  text-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
 }
+
 .lesson-cards-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 34px 34px;
 }
+
 .lesson-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(115deg, #181a2a 60%, #23243a 100%);
+  background: linear-gradient(115deg, rgba(24, 26, 42, 0.95) 60%, rgba(35, 36, 58, 0.95) 100%);
   border-radius: 18px;
-  box-shadow: 0 6px 40px #191b2f44;
+  box-shadow: 0 6px 40px rgba(25, 27, 47, 0.6);
   padding: 28px 18px 20px 18px;
-  transition: box-shadow 0.18s, border 0.18s;
+  transition: box-shadow 0.18s, border 0.18s, transform 0.18s;
   border: 2px solid #1d2a32;
   min-height: 435px;
   min-width: 312px;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
 }
+
+.lesson-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(100, 255, 218, 0.02), rgba(79, 195, 247, 0.02));
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.lesson-card:hover::before {
+  opacity: 1;
+}
+
 .lesson-card:hover {
-  box-shadow: 0 10px 42px #33ffd955, 0 0 0 3px #64ffda66;
+  box-shadow: 0 10px 42px rgba(51, 255, 217, 0.4), 0 0 0 3px rgba(100, 255, 218, 0.4);
   border: 2.5px solid #64ffda;
+  transform: translateY(-5px);
 }
+
 .lesson-card-img {
   min-width: 192px;
   min-height: 192px;
   flex-shrink: 0;
   width: 78px;
   height: 78px;
-  background: #10122b;
+  background: linear-gradient(135deg, rgba(16, 18, 43, 0.9), rgba(29, 42, 50, 0.9));
   border-radius: 14px;
   margin-bottom: 16px;
-  box-shadow: 0 3px 16px #0003;
+  box-shadow: 0 3px 16px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  backdrop-filter: blur(5px);
+  position: relative;
 }
+
+.lesson-card-img::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(100, 255, 218, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.lesson-card:hover .lesson-card-img::before {
+  opacity: 1;
+}
+
 .lesson-card-img img {
   width: 62px;
   height: 62px;
   object-fit: contain;
   display: block;
+  position: relative;
+  z-index: 1;
 }
+
 .lesson-card-body {
   flex: 1;
   width: 100%;
   text-align: center;
   text-align: right;
+  position: relative;
+  z-index: 1;
 }
+
 .lesson-title {
   color: #64ffda;
   font-size: 1.13rem;
   font-weight: 800;
   margin-bottom: 7px;
+  text-shadow: 0 0 10px rgba(100, 255, 218, 0.2);
 }
+
 .lesson-info {
   color: #e0e0e0;
   font-size: 1.04rem;
   margin-bottom: 13px;
   min-height: 48px;
 }
+
 .lesson-title, .lesson-info {
   text-align: center;
 }
+
 .lesson-start-btn {
   background: linear-gradient(90deg, #64ffda 0%, #4fc3f7 100%);
   color: #181a2a;
@@ -84,15 +148,35 @@
   font-size: 1.09rem;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 1px 7px #1112;
-  transition: filter 0.15s, box-shadow 0.15s;
+  box-shadow: 0 1px 7px rgba(17, 17, 34, 0.2);
+  transition: filter 0.15s, box-shadow 0.15s, transform 0.15s;
   margin-top: 12px;
   display: block;
   margin: 18px auto 0 auto;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
 }
+
+.lesson-start-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.lesson-start-btn:hover::before {
+  left: 100%;
+}
+
 .lesson-start-btn:hover {
   filter: brightness(1.1);
-  box-shadow: 0 4px 20px #64ffda33;
+  box-shadow: 0 4px 20px rgba(100, 255, 218, 0.4);
+  transform: translateY(-2px);
 }
 
 .py-lesson-pagination {
@@ -102,27 +186,39 @@
   gap: 20px;
   align-items: center;
 }
+
 .py-lesson-pagination button {
-  background: #23243a;
-  border: 1.5px solid #64ffda55;
+  background: rgba(35, 36, 58, 0.9);
+  border: 1.5px solid rgba(100, 255, 218, 0.33);
   color: #64ffda;
   padding: 7px 16px;
   border-radius: 8px;
   font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: border 0.15s, color 0.15s, background 0.18s;
+  transition: border 0.15s, color 0.15s, background 0.18s, transform 0.15s;
+  backdrop-filter: blur(5px);
 }
+
+.py-lesson-pagination button:hover:not(:disabled) {
+  background: rgba(35, 36, 58, 1);
+  border: 1.5px solid rgba(100, 255, 218, 0.6);
+  transform: translateY(-1px);
+}
+
 .py-lesson-pagination button:disabled {
   color: #b0eaff;
-  background: #23243a99;
-  border: 1.5px solid #2afadf22;
+  background: rgba(35, 36, 58, 0.6);
+  border: 1.5px solid rgba(42, 250, 223, 0.13);
   cursor: not-allowed;
 }
+
 .py-lesson-pagination span {
   color: #b0eaff;
   font-size: 1.07rem;
+  text-shadow: 0 0 10px rgba(176, 234, 255, 0.3);
 }
+
 .py-center {
   text-align: center;
   font-size: 1.2rem;
@@ -134,6 +230,7 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
 @media (max-width: 650px) {
   .lesson-cards-grid {
     grid-template-columns: 1fr;
@@ -141,5 +238,9 @@
   }
   .lesson-card {
     padding: 16px 5px 14px 5px;
+  }
+  
+  .py-lesson-content {
+    padding: 0 8px;
   }
 }

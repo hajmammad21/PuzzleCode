@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './SeasonMissions.css';
 import { useParams } from 'react-router-dom';
+import PuzzleLoading from '../../Components/PuzzleLoading/PuzzleLoading';
 
 const SeasonMissions = () => {
   const { seasonId } = useParams();
@@ -20,7 +21,7 @@ const SeasonMissions = () => {
     });
   }, [seasonId]);
 
-  if (loading) return <div className="py-center">در حال بارگذاری...</div>;
+ if (loading) return <PuzzleLoading />;
   if (!season) return <div className="py-center">فصل پیدا نشد.</div>;
 
   return (

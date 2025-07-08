@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MonacoEditor from '@monaco-editor/react';
 import './MissionView.css';
+import PuzzleLoading from '../../Components/PuzzleLoading/PuzzleLoading';
 
 const MissionView = () => {
   const { missionId } = useParams();
@@ -40,7 +41,7 @@ const MissionView = () => {
     setSubmitting(false);
   };
 
-  if (loading) return <div className="py-center">در حال بارگذاری ...</div>;
+  if (loading) return <PuzzleLoading />;
   if (!mission || mission.error) return <div className="py-center">ماموریت پیدا نشد.</div>;
 
   return (
